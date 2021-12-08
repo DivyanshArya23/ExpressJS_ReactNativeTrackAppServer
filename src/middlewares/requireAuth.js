@@ -7,12 +7,12 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    res.status(401).json({ error: "User must be logged in." });
+    return res.status(401).json({ error: "User must be logged in." });
   }
   const token = authorization.replace("Bearer ", "");
   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
     if (err) {
-      res.status(401).json({ error: "Invalid User Found Token" });
+      return res.status(401).json({ error: "Invalid User Found Token" });
     }
     const { userId } = payload;
     const user = await User.findById(userId);
