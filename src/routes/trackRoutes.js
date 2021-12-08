@@ -19,13 +19,9 @@ router.post("/tracks", async (req, res) => {
     return res
       .status(422)
       .json({ error: "You must provide name and location" });
-  console.log("blank validation passed");
   try {
-    console.log("inside try");
     const track = new Track({ name, location, userId: req.user._id });
-    console.log("track created");
     await track.save();
-    console.log("track saved");
     res.send(track);
   } catch (error) {
     return res.status(422).json({ error: error.message });
