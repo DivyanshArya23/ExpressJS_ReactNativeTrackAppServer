@@ -14,13 +14,13 @@ router.get("/tracks", async (req, res) => {
 });
 
 router.post("/tracks", async (req, res) => {
-  const { name, location } = req.body;
-  if (!name || !location)
+  const { name, locations } = req.body;
+  if (!name || !locations)
     return res
       .status(422)
       .json({ error: "You must provide name and location" });
   try {
-    const track = new Track({ name, location, userId: req.user._id });
+    const track = new Track({ name, locations, userId: req.user._id });
     await track.save();
     res.send(track);
   } catch (error) {
